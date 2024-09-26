@@ -8,9 +8,8 @@ use App\Http\Controllers\Api\Authcontroller;
 //     return $request->user();
 // })->middleware('auth:sanctum');
 
-Route::get('api/test', function () {
-    return 'test';});
 
+// FOR STUDENT
 Route::post('auth/register', [Authcontroller::class, 'Register']);
 
  Route::post('auth/login', [Authcontroller::class, 'Login']);

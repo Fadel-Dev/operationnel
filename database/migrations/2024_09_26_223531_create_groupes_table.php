@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sequences', function (Blueprint $table) {
-
-              $table->id();
-            $table->unsignedBigInteger('groupeId');
-            $table->unsignedBigInteger('moduleId');
-            $table->unsignedBigInteger('tuteurId')->nullable(false);
-            $table->string('etat');
-            $table->string('nom');
+        Schema::create('groupes', function (Blueprint $table) {
+            $table->id();
             $table->timestamps();
+              $table->string('moduleId');
+            $table->string('nom');
+             $table->unsignedBigInteger('tuteurId')->nullable(false);
+
         });
     }
 
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sequences');
+        Schema::dropIfExists('groupes');
     }
 };

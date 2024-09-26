@@ -232,5 +232,9 @@ class Authcontroller extends Controller
         return User::all();
     }
 
+// DYNAMICS DASHBOARD LOGIN
+public function DashboardLogin(Request $request)
+
+
 
 }
