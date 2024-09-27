@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Authcontroller;
+use App\Http\Controllers\Api\TrackerController;
+use App\Http\Controllers\Api\groupeController;
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -18,5 +20,14 @@ Route::post('auth/register', [Authcontroller::class, 'Register']);
 Route::post('auth/registerTutore', [Authcontroller::class, 'RegisterTutore']);
 // Register for Tracker
 Route::post('auth/registerTracker', [Authcontroller::class, 'RegisterTracker']);
+// List Users
+Route::get('auth/listUsers', [Authcontroller::class, 'ListUsers'])->middleware('auth:sanctum');
 
-Route::get('list',[Authcontroller::class,'ListUsers']);
+// FOR TACKER CREATIONG GROUPE
+
+Route::post('auth/createGroupe', [TrackerController::class, 'createGroupe'])->middleware('auth:sanctum');
+
+
+
+// RECUP ALL GROUPES
+Route::get('auth/listGroupes', [groupeController::class, 'listGroupes'])->middleware('auth:sanctum');

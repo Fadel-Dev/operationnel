@@ -233,8 +233,4 @@ class Authcontroller extends Controller
     }
 
 // DYNAMICS DASHBOARD LOGIN
-public function DashboardLogin(Request $request)
-
-
-
 }
