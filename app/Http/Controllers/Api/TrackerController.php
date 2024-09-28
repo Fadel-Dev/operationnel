@@ -21,17 +21,18 @@ class TrackerController extends Controller
 
 public function createGroupe(Request $request)
 {
-    // Get the authenticated user
     $tracker = Auth::user();
+
+    $trackerId = $tracker->id;
 
     // Validate the request
     $addingGroupe = Validator::make($request->all(), [
-        'nom' => 'required|string|max:255',
-        'moduleId' => 'required|integer',
-        'tuteurId' => 'required|integer',
+        'nom' => 'required',
+        'moduleId' => 'required',
+        'tuteurId' => 'required',
     ]);
 
-    // Return validation errors if any
+
     if ($addingGroupe->fails()) {
         return response()->json([
             'status' => false,
@@ -40,14 +41,16 @@ public function createGroupe(Request $request)
         ], 400);
     }
 
-    // Check if the user has the 'trackeur' role
-    if ($tracker->role == 'tuteur') {
-        // Create a new Groupe associated with the user (tracker)
+
+
+    if ( $tracker->role !== 'tuteur' && $tracker->role !== 'admin') {
+        // Create a new Groupe
         $tracker->groupes()->create([
             'nom' => $request->nom,
             'moduleId' => $request->moduleId,
             'tuteurId' => $request->tuteurId,
         ]);
+
 
         return response()->json([
             'status' => true,
@@ -58,6 +61,7 @@ public function createGroupe(Request $request)
         return response()->json([
             'status' => false,
             'message' => 'Vous n\'êtes pas autorisé à créer un groupe',
+
         ], 403); // 403 for forbidden access
     }
 }

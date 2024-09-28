@@ -21,6 +21,10 @@ class User extends Authenticatable
         return $this->hasMany(Groupe::class, 'tuteurId');
     }
 
+    public function modules() {
+        return $this->hasMany(Groupe::class, 'trackeurId');
+    }
+
     /**
      * The attributes that are mass assignable.
      *

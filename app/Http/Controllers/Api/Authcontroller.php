@@ -168,6 +168,10 @@ class Authcontroller extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'User Created Successfully',
+                'role'=> $user->role,
+                'sexe'=> $user->sexe,
+                'email'=> $user->email,
+                'telephone'=> $user->telephone,
                 'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
 
@@ -213,6 +217,10 @@ class Authcontroller extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'User Logged In Successfully',
+                'role'=> $user->role,
+                'sexe'=> $user->sexe,
+                'email'=> $user->email,
+                'telephone'=> $user->telephone,
                 'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
 

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Authcontroller;
 use App\Http\Controllers\Api\TrackerController;
 use App\Http\Controllers\Api\groupeController;
+use App\Http\Controllers\Api\moduleController;
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -28,6 +29,8 @@ Route::get('auth/listUsers', [Authcontroller::class, 'ListUsers'])->middleware('
 Route::post('auth/createGroupe', [TrackerController::class, 'createGroupe'])->middleware('auth:sanctum');
 
 
-
 // RECUP ALL GROUPES
 Route::get('auth/listGroupes', [groupeController::class, 'listGroupes'])->middleware('auth:sanctum');
+
+// CREATE MODULES
+Route::post('auth/createModule', [moduleController::class, 'createModule'])->middleware('auth:sanctum');
