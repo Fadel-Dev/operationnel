@@ -66,6 +66,59 @@ public function createGroupe(Request $request)
     }
 }
 
+// MODIFICATION GROUPE
+
+public function updateGroupe(Request $request, $id)
+{
+    $tracker = Auth::user();
+    $trackerId = $tracker->id;
+    $groupe = Groupe::find($id);
+    if ($tracker->role !== 'tuteur' && $tracker->role !== 'admin') {
+        if ($groupe->tuteurId === $trackerId) {
+            $groupe->update([
+                'nom' => $request->nom,
+                'moduleId' => $request->moduleId,
+                'tuteurId' => $request->tuteurId,
+            ]);
+            return response()->json([
+                'status' => true,
+                'message' => 'Groupe mis à jour avec succès'], 200);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Vous n\'avez pas le droit de modifier ce groupe',
+            ], 403);
+        }
+    } else {
+        return response()->json([
+            'status' => false,
+            'message' => 'Vous n\'avez pas le droit de modifier ce groupe',
+        ], 403);
+    } }// 403 for forbidden access
 
 
+    // DELETE GROUPE
+    public function deleteGroupe($id)
+    {
+        $tracker = Auth::user();
+        $trackerId = $tracker->id;
+        $groupe = Groupe::find($id);
+        if ($tracker->role !== 'tuteur' && $tracker->role !== 'admin') {
+            if ($groupe->tuteurId === $trackerId) {
+                $groupe->delete();
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Groupe supprimé avec succès'], 200);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Vous n\'avez pas le droit de supprimer ce groupe',
+                ], 403);
+            }
+        } else {
+            return response()->json([
+                'status' => false,
+            ]);}
+
+}
 }

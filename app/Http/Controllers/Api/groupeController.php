@@ -13,4 +13,7 @@ class groupeController extends Controller
     {
         return Groupe::all();
     }
+
+
+
 }
