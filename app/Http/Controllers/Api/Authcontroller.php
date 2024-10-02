@@ -113,7 +113,9 @@ class Authcontroller extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'User Created Successfully',
-                'token' => $user->createToken("API TOKEN")->plainTextToken
+                'token' => $user->createToken("API TOKEN")->plainTextToken,
+                'role'=> $user->role,
+
             ], 200);
 
         } catch (\Throwable $th) {
@@ -182,6 +184,71 @@ class Authcontroller extends Controller
             ], 500);
         }
     }
+
+
+// REGISTER FOR ADMIN
+
+  public function RegisterAdmin(Request $request)
+     {
+        try {
+            //Validated
+            $validateUser = Validator::make($request->all(),
+            [
+                'nom' => 'required',
+                'prenom' => 'required',
+                'adresse' => 'required',
+                'sexe' => 'required',
+                'telephone' => 'required',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required',
+                'heureEffectuee' => 'nullable',
+                'heureNonEffectue' => 'nullable',
+
+            ]);
+
+            if($validateUser->fails()){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'validation error',
+                    'errors' => $validateUser->errors()
+                ], 401);
+            }
+
+            $user = User::create([
+                'nom' => $request->nom,
+                'prenom' => $request->prenom,
+                'role' => "admin",
+                'adresse' => $request->adresse,
+                'sexe' => $request->sexe,
+                'telephone' => $request->telephone,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'heureEffectuee' => $request->heureEffectuee,
+                'heureNonEffectue' => $request->heureNonEffectue,
+
+            ]);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Admin Created Successfully',
+                'role'=> $user->role,
+                'sexe'=> $user->sexe,
+                'email'=> $user->email,
+                'telephone'=> $user->telephone,
+                'token' => $user->createToken("API TOKEN")->plainTextToken
+            ], 200);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+
+
+
 
     /**
      * Login The User

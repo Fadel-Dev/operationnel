@@ -20,6 +20,10 @@ Route::post('auth/register', [Authcontroller::class, 'Register']);
 
 //  Register for Tutore
 Route::post('auth/registerTutore', [Authcontroller::class, 'RegisterTutore']);
+
+// Register for Admin
+Route::post('auth/registerAdmin', [Authcontroller::class, 'RegisterAdmin']);
+
 // Register for Tracker
 Route::post('auth/registerTracker', [Authcontroller::class, 'RegisterTracker']);
 // List Users
@@ -28,6 +32,9 @@ Route::get('auth/listUsers', [Authcontroller::class, 'ListUsers'])->middleware('
 // FOR TACKER CREATIONG GROUPE
 
 Route::post('createGroupe', [TrackerController::class, 'createGroupe'])->middleware('auth:sanctum');
+
+// ASSIGNER TUTEUR A GROUPE
+Route::put('assignTuteur/{tuteurId}',[TrackerController::class, 'assignerGroupes'])->middleware('auth:sanctum');
 
 // MODIFICATION GROUPE
 Route::put('modGroupes/{id}',[TrackerController::class, 'updateGroupe'])->middleware('auth:sanctum');
@@ -62,3 +69,6 @@ Route::delete('deleteSequence/{id}',[SequenceController::class, 'deleteSequence'
 
 // RECUP ALL SEQUENCE
 Route::get('listSequence', [SequenceController::class, 'listSequence'])->middleware('auth:sanctum');
+
+// HEURES EFFECTUEES
+Route::get('heureEffectue', [trackerController::class, 'HeureEffect'])->middleware('auth:sanctum');

@@ -21,6 +21,6 @@ class Groupe extends Model
     // Relation avec Tuteur (User)
     public function tuteur()
     {
-        return $this->belongsTo(User::class, 'tuteurId');
+        return $this->belongsToMany(User::class, 'tuteurId');
     }
 }

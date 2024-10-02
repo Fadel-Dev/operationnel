@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('telephone');
             $table->integer('heureEffectuee')->nullable();
             $table->integer('heureNonEffectue')->nullable();
+            $table->integer('heureAEffectue')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

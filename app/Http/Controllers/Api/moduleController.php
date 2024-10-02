@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\DB;
 
 class moduleController extends Controller
 {
-
     public function createModule(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -34,23 +33,37 @@ class moduleController extends Controller
 
          $trackerId = $tracker->id;
 
-        if ( $tracker->role !== 'tuteur' && $tracker->role !== 'admin')
+        if ( $tracker->role !== 'tuteur' && $tracker->role !== 'etudiant')
         {
             $module = Module::create([
                 'nom' => $request->nom,
                 'trakeurId' => $trackerId,
                 'semaineAttribuees' => $request->semaineAttribuees,
             ]);
+             $tutorId = $request->query('trackeurId');
+        $base = User::find($tutorId);
+
+        $nomTrakeur = $base->nom;
+        $prenomTrakeur = $base->prenom;
+        $emailTrakeur = $base->email;
+        $role = $base->role;
+
 
             return response()->json([
                 'status' => true,
                 'message' => 'Module created successfully',
                 'module' => $module,
+                'nomTrakeur' => $nomTrakeur,
+                'prenomTrakeur' => $prenomTrakeur,
+                'emailTrakeur' => $emailTrakeur,
+                'id_user' => $tutorId,
+                'role' => $tracker->role,
             ], 201);
         } else {
             return response()->json([
                 'status' => false,
                 'message' => 'Vous n\'etes pas autoris  cree ce module',
+
             ], 403);
         }
     }
@@ -69,7 +82,7 @@ class moduleController extends Controller
 
 
 
-        if ($trackeur->role !== 'tuteur' && $trackeur->role !== 'admin')
+        if ($trackeur->role !== 'tuteur' && $trackeur->role !== 'etudiant')
         {
             if ($module->trakeurId === $trackeurId) {
                 $module->update([
@@ -101,7 +114,7 @@ class moduleController extends Controller
         $trackeur = Auth::user();
         $trackeurId = $trackeur->id;
         $module = Module::find($id);
-        if ($trackeur->role !== 'tuteur' && $trackeur->role !== 'admin')
+        if ($trackeur->role !== 'tuteur' && $trackeur->role !== 'etudiant')
         {
             if ($module->trakeurId === $trackeurId) {
                 $module->delete();
